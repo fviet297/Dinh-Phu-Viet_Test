@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  application:
+    name: vietdp
+  datasource:
+    password: PlsDoNotShareThePass123@
+    url: jdbc:mysql://178.128.109.9:3306/entrance_test
+    username: test01
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8082
+mail:
+  server:
+    hostname: "smtp.sendgrid.net"
+    port: 587
+    username: "apikey"
+    password: "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"
+    from-address: "fviet295@gmail.com"
+    from-name: "VIETDP"
+  subject-prefix: "[VIETDP][TEST]"
