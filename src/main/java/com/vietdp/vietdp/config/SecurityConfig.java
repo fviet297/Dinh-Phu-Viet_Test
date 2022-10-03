@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return cors;
         }).and()
 		.authorizeRequests()
-				.antMatchers(HttpMethod.POST,"/sign-in").permitAll() // accept_all
+				.antMatchers("/sign-up","/sign-in","/refresh-token").permitAll() // accept_all
                 .anyRequest().authenticated();
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

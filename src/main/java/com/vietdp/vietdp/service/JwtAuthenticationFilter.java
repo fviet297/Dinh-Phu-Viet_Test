@@ -38,9 +38,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("url {} {}", request.getRequestURL().toString(), request.getHeader("Authorization"));
             String jwt = getJwtFromRequest(request);
             log.info("Token: {}",jwt);
-//            if(!StringUtils.hasText(jwt)&&!request.getRequestURL().toString().contains("sign-in")){
-//                throw new AuthenticationException("Can not access");
-//            }
+            if(!StringUtils.hasText(jwt)&&!request.getRequestURL().toString().contains("sign-in")){
+                throw new AuthenticationException("Can not access");
+            }
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String email = tokenProvider.getEmailFromJWT(jwt);
                 log.debug("UserID: {}",email);
@@ -81,7 +81,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         log.info(userDetails.getUsername());
         if (userDetails != null) {
-            // Nếu người dùng hợp lệ, set thông tin cho Seturity Context
             UsernamePasswordAuthenticationToken
                     authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

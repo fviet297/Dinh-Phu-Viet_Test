@@ -51,11 +51,6 @@ public class UsersController {
 		userService.logout(request,response);
 		return new ResponseEntity<>("Logout Success !",null,HttpStatus.ACCEPTED);
 	}
-	@PostMapping("/list/lpl")
-	public List<Users> list(){
-		return userService.list();
-	}
-	
 	@PostMapping("/refresh-token")
 	public Map<String,String> refreshToken(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		return userService.refreshToken(request,response);
