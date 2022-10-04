@@ -21,9 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class VietdpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VietdpApplication.class, args);
-		
 	}
-	
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();

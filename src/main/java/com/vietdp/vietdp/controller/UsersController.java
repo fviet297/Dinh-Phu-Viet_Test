@@ -1,6 +1,5 @@
 package com.vietdp.vietdp.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -11,19 +10,18 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vietdp.vietdp.dto.LoginRequest;
 import com.vietdp.vietdp.dto.UsersDTO;
-import com.vietdp.vietdp.entity.Users;
 import com.vietdp.vietdp.service.UserService;
 
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -42,7 +40,8 @@ public class UsersController {
 	}
 
 	@PostMapping("/sign-in")
-	public Map<String,Object> login(@RequestBody LoginRequest loginRequest) throws NotFoundException {
+	public Map<String,Object> login(@RequestBody @Valid LoginRequest loginRequest) throws Exception {
+
 		return userService.login(loginRequest);
 	}
 
@@ -56,4 +55,12 @@ public class UsersController {
 		return userService.refreshToken(request,response);
 	}
 	
+	@ExceptionHandler(BindException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)  
+	public String handleBindException(BindException e) {
+	    String errorMessage = "Request không hợp lệ";
+	    if (e.getBindingResult().hasErrors())
+	        e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+	    return errorMessage;
+	}
 }

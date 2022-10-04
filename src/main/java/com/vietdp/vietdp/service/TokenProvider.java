@@ -112,7 +112,9 @@ public class TokenProvider {
         return Long.parseLong(claims.getSubject());
     }
 
-
+    void removeToken(Long idUser){
+        tokenRepository.deleteByUserId(idUser);
+    }
 
 }
 
